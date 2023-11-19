@@ -1,0 +1,261 @@
+//Zadaniye 1
+using System.Diagnostics;
+Journal journal = new("Magazine", "2023", "Magazine Baku", "050-441-01-99", "bakumagazine@gmail.com",5);
+journal += 2;
+journal -= 1;
+
+
+journal.ShowInfo();
+
+journal.InputInfo();
+journal.ShowInfo();
+
+class Journal
+{
+    public string Name { get; set; }
+    public string FoundingYear { get; set; }
+    public string Info { get; set; }
+    public string Number { get; set; }
+    public string Email { get; set; }
+    public int Employees { get; set; }
+
+    public Journal(string name, string foundingYear, string description, string contactNumber, string contactEmail, int employees)
+    {
+        this.Name = name;
+        FoundingYear = foundingYear;
+        Info = description;
+        Number = contactNumber;
+        Email = contactEmail;
+        employees = employees;
+
+    }
+    public void InputInfo()
+    {
+        Console.WriteLine("Enter name of the journal");
+        Name = Console.ReadLine();
+        Console.WriteLine("Enter  year of foundation");
+        FoundingYear = Console.ReadLine();
+        Console.WriteLine("Enter description of the journal");
+        Info = Console.ReadLine();
+        Console.WriteLine("Enter contact phone number");
+        Number = Console.ReadLine();
+        Console.WriteLine("Enter contact e-mail");
+        Email = Console.ReadLine();
+        Console.WriteLine("Enter number of employees");
+        Employees = Convert.ToInt32(Console.ReadLine());
+    }
+    public void ShowInfo()
+    {
+        Console.WriteLine($"Name of the journal: {Name}");
+        Console.WriteLine($"Year of foundation: {FoundingYear}");
+        Console.WriteLine($"Description of the journal: {Info}");
+        Console.WriteLine($"Contact phone number: {Number}");
+        Console.WriteLine($"Contact e-mail: {Email}");
+        Console.WriteLine($"Employees: {Employees}");
+    }
+
+    public static Journal operator +(Journal journal, int employees)
+    {
+        journal.Employees += employees;
+        return journal;
+    }
+
+    public static Journal operator -(Journal journal, int employees)
+    {
+        journal.Employees -= employees;
+        return journal;
+    }
+
+    public static bool operator ==(Journal journal1, Journal journal2)
+    {
+        return journal1.Employees == journal2.Employees;
+    }
+
+    public static bool operator !=(Journal journal1, Journal journal2)
+    {
+        return journal1.Employees != journal2.Employees;
+    }
+
+    public static bool operator <(Journal journal1, Journal journal2)
+    {
+        return journal1.Employees < journal2.Employees;
+    }
+
+    public static bool operator >(Journal journal1, Journal journal2)
+    {
+        return journal1.Employees > journal2.Employees;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Journal otherJournal)
+        {
+            return this.Employees == otherJournal.Employees;
+        }
+        return false;
+    }
+}
+
+//Zadaniye 2
+using System.Runtime.CompilerServices;
+Store store = new("Bravo", "2018", "Products Magazine", "050-441-01-99", "bravoaze@gmail.com",250);
+journal += 2;
+journal -= 1;
+
+
+journal.ShowInfo();
+
+journal.InputInfo();
+journal.ShowInfo();
+
+class Store
+{
+    public string Name { get; set; }
+    public string FoundingYear { get; set; }
+    public string Info { get; set; }
+    public string Number { get; set; }
+    public string Email { get; set; }
+    public int Square { get; set; }
+
+    public Store(string name, string foundingYear, string description, string contactNumber, string contactEmail, int square)
+    {
+        this.Name = name;
+        FoundingYear = foundingYear;
+        Info = description;
+        Number = contactNumber;
+        Email = contactEmail;
+        Square = square;
+
+    }
+    public void InputInfo()
+    {
+        Console.WriteLine("Enter name of the journal");
+        Name = Console.ReadLine();
+        Console.WriteLine("Enter  year of foundation");
+        FoundingYear = Console.ReadLine();
+        Console.WriteLine("Enter description of the journal");
+        Info = Console.ReadLine();
+        Console.WriteLine("Enter contact phone number");
+        Number = Console.ReadLine();
+        Console.WriteLine("Enter contact e-mail");
+        Email = Console.ReadLine();
+        Console.WriteLine("Enter number of employees");
+        Square = Convert.ToInt32(Console.ReadLine());
+    }
+    public void ShowInfo()
+    {
+        Console.WriteLine($"Name of the journal: {Name}");
+        Console.WriteLine($"Year of foundation: {FoundingYear}");
+        Console.WriteLine($"Description of the journal: {Info}");
+        Console.WriteLine($"Contact phone number: {Number}");
+        Console.WriteLine($"Contact e-mail: {Email}");
+        Console.WriteLine($"Employees: {Square}");
+    }
+
+    public static Store operator +(Store store, int square)
+    {
+        store.Square += square;
+        return store;
+    }
+
+    public static Store operator -(Store store, int square)
+    {
+        store.Square -= square;
+        return store;
+    }
+
+    public static bool operator ==(Store store1, Store store2)
+    {
+        return store1.Square == store2.Square;
+    }
+
+    public static bool operator !=(Store store1, Store store2)
+    {
+        return store1.Square != store2.Square;
+    }
+
+    public static bool operator <(Store store1, Store store2)
+    {
+        return store1.Square < store2.Square;
+    }
+
+    public static bool operator >(Store store1, Store store2)
+    {
+        return store1.Square > store2.Square;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Store OtherStore)
+        {
+            return this.Square == OtherStore.Square;
+        }
+        return false;
+    }
+}
+
+//Zadaniye 3
+BookList booklist = new();
+Book book1 = new("Book1");
+Book book2 = new("Book2");
+
+booklist.AddBook(book1);
+booklist.AddBook(book2);
+
+
+for (int i = 0; i < booklist.Count; i++)
+    Console.WriteLine($"{i + 1}-th book,{booklist[i]}");
+Book bookforremove = new("Book1");
+booklist.RemoveBook(bookforremove);
+for (int i = 0; i < booklist.Count; i++)
+    Console.WriteLine($"{i + 1}-th book,{booklist[i]}");
+
+class Book
+{
+    public string BookName { get; set; }
+
+    public Book(string bookname)
+    {
+        BookName = bookname;
+    }
+    public override string ToString()
+    {
+        return $"{BookName}";
+    }
+}
+class BookList
+{
+    private List<Book> books = new List<Book>();
+    public void AddBook(Book book)
+    {
+        books.Add(book);
+    }
+    public bool RemoveBook(Book book)
+    {
+        return books.Remove(book);
+    }
+    public bool ContainsBook(Book book)
+    {
+        return books.Contains(book);
+    }
+
+    public Book this[int index]
+    {
+        get
+        {
+            if (index >= 0 && index < books.Count)
+                return books[index];
+            else
+                throw new IndexOutOfRangeException("Index is out of range.");
+        }
+    }
+    public int Count
+    {
+        get { return books.Count; }
+    }
+}
+
+
+
+
+
