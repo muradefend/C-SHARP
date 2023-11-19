@@ -1,0 +1,88 @@
+//Zadaniye 1
+
+Console.WriteLine("1.From decimal to binary\n2.From binary to decimal");
+int turn = int.Parse(Console.ReadLine());
+switch (turn)
+{
+    case 1:
+        Console.WriteLine("Enter your number");
+        if (int.TryParse(Console.ReadLine(), out int decToBin))
+        {
+            string tmp = Convert.ToString(decToBin, 2);
+            Console.WriteLine(tmp);
+        }
+        else Console.WriteLine("Invalid number");
+        break;
+    case 2:
+        Console.WriteLine("Enter your number");
+        string binToDec = Console.ReadLine();
+        if (IsBinary(binToDec))
+        {
+            int num = Convert.ToInt32(binToDec, 2);
+            Console.WriteLine(num);
+        }
+        else Console.WriteLine("Invalid number");
+        break;
+
+    default:
+        Console.WriteLine("Invalid number");
+        break;
+}
+
+static bool IsBinary(string numbers)
+{
+    foreach(char  digit in numbers)
+    {
+        if (digit != '0' && digit != '1') return false;
+    }
+    return true;
+}
+
+//Zadaniye 2
+
+string[] numbers = new string[] {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+Console.WriteLine("Enter a word from zero to nine");
+string num = Console.ReadLine().ToLower();
+int index = Array.IndexOf(numbers, num);
+if (index != -1) Console.WriteLine("Your number is: " + index);
+else Console.WriteLine("This number is not in the range");
+
+//Zadaniye 3
+
+using System.Text.RegularExpressions;
+InternationalPassport passport = new InternationalPassport("Example Example Test","12345","12/45");
+passport.ShowData();
+
+class InternationalPassport
+{
+    public string FIO { get; set; }
+    public string PassportNum { get; set; }
+    public string Date { get; set; }
+
+    public InternationalPassport(string FIO, string PassportNum,string Date)
+    {
+
+            this.FIO = FIO;
+            this.PassportNum = PassportNum;
+            this.Date = Date;
+        
+    }
+    public void ShowData()
+    {
+        Console.WriteLine($"Name: {FIO}");
+        Console.WriteLine($"Passport ID: {PassportNum}");
+        Console.WriteLine($"Issue date: {Date}");
+    }
+    public void InputData()
+    {
+        Console.WriteLine("Enter full name");
+        FIO = Console.ReadLine();
+        Console.WriteLine("Enter passport ID");
+        PassportNum = Console.ReadLine();
+        Console.WriteLine("Enter issue date");
+        Date = Console.ReadLine();
+    }
+}
+
+//Zadaniye 4
+//NE smog
