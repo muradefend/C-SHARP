@@ -1,0 +1,159 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
+
+Barn barn = new Barn();
+
+while (true)
+{
+    Console.WriteLine("1. Add Product");
+    Console.WriteLine("2. Edit Product");
+    Console.WriteLine("3. Delete Product");
+    Console.WriteLine("4. List Products");
+    Console.WriteLine("5. Save to JSON");
+    Console.WriteLine("6. Load from JSON");
+    Console.WriteLine("7. Exit");
+
+    Console.Write("Enter your choice: ");
+    int choice = int.Parse(Console.ReadLine());
+
+    switch (choice)
+    {
+        case 1:
+            Product newProduct = new Product();
+            Console.Write("Enter ID: ");
+            newProduct.ID = int.Parse(Console.ReadLine());
+            Console.Write("Enter Name: ");
+            newProduct.Name = Console.ReadLine();
+            Console.Write("Enter Production Date (yyyy-MM-dd): ");
+            newProduct.ProductionDate = DateTime.Parse(Console.ReadLine());
+            Console.Write("Enter Expires On (yyyy-MM-dd): ");
+            newProduct.ExpiresOn = DateTime.Parse(Console.ReadLine());
+            Console.Write("Enter Brutto Weight: ");
+            newProduct.BruttoWeight = double.Parse(Console.ReadLine());
+            Console.Write("Enter Netto Weight: ");
+            newProduct.NettoWeight = double.Parse(Console.ReadLine());
+            barn.AddProduct(newProduct);
+            break;
+
+        case 2:
+            Console.Write("Enter the ID of the product to edit: ");
+            int editId = int.Parse(Console.ReadLine());
+            Product editedProduct = new Product();
+            Console.Write("Enter Name: ");
+            editedProduct.Name = Console.ReadLine();
+            Console.Write("Enter Production Date (yyyy-MM-dd): ");
+            editedProduct.ProductionDate = DateTime.Parse(Console.ReadLine());
+            Console.Write("Enter Expires On (yyyy-MM-dd): ");
+            editedProduct.ExpiresOn = DateTime.Parse(Console.ReadLine());
+            Console.Write("Enter Brutto Weight: ");
+            editedProduct.BruttoWeight = double.Parse(Console.ReadLine());
+            Console.Write("Enter Netto Weight: ");
+            editedProduct.NettoWeight = double.Parse(Console.ReadLine());
+            barn.EditProduct(editId, editedProduct);
+            break;
+
+        case 3:
+            Console.Write("Enter the ID of the product to delete: ");
+            int deleteId = int.Parse(Console.ReadLine());
+            barn.DeleteProduct(deleteId);
+            break;
+
+        case 4:
+            barn.ListProducts();
+            break;
+
+        case 5:
+            Console.Write("Enter the file path to save to JSON: ");
+            string saveFilePath = Console.ReadLine();
+            barn.SaveToJson(saveFilePath);
+            break;
+
+        case 6:
+            Console.Write("Enter the file path to load from JSON: ");
+            string loadFilePath = Console.ReadLine();
+            barn.LoadFromJson(loadFilePath);
+            break;
+
+        case 7:
+            Environment.Exit(0);
+            break;
+
+        default:
+            Console.WriteLine("Invalid choice. Please try again.");
+            break;
+    }
+}
+
+class Product
+{
+    public int ID { get; set; }
+    public string Name { get; set; }
+    public DateTime ProductionDate { get; set; }
+    public DateTime ExpiresOn { get; set; }
+    public double BruttoWeight { get; set; }
+    public double NettoWeight { get; set; }
+}
+
+class Barn
+{
+    private List<Product> products;
+
+    public Barn()
+    {
+        products = new List<Product>();
+    }
+
+    public void AddProduct(Product product)
+    {
+        products.Add(product);
+    }
+
+    public void EditProduct(int id, Product editedProduct)
+    {
+        int index = products.FindIndex(p => p.ID == id);
+        if (index != -1)
+        {
+            products[index] = editedProduct;
+        }
+    }
+
+    public void DeleteProduct(int id)
+    {
+        Product productToRemove = products.Find(p => p.ID == id);
+        if (productToRemove != null)
+        {
+            products.Remove(productToRemove);
+        }
+    }
+
+    public void SaveToJson(string filePath)
+    {
+        string json = JsonConvert.SerializeObject(products, Formatting.Indented);
+        File.WriteAllText(filePath, json);
+    }
+
+    public void LoadFromJson(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            products = JsonConvert.DeserializeObject<List<Product>>(json);
+        }
+    }
+
+    public void ListProducts()
+    {
+        foreach (Product product in products)
+        {
+            Console.WriteLine($"ID: {product.ID}");
+            Console.WriteLine($"Name: {product.Name}");
+            Console.WriteLine($"Production Date: {product.ProductionDate}");
+            Console.WriteLine($"Expires On: {product.ExpiresOn}");
+            Console.WriteLine($"Brutto Weight: {product.BruttoWeight}");
+            Console.WriteLine($"Netto Weight: {product.NettoWeight}");
+            Console.WriteLine();
+        }
+    }
+}
