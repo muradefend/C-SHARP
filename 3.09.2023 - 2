@@ -1,0 +1,256 @@
+//Zadaniye1
+
+Money price = new(5, 50);   
+Product product = new("Iphone", price);
+product.Buy(2, 25);
+product.Print();
+class Money
+{
+    public int money { get; set; }
+    public int cents { get; set; }
+
+    public Money(int money, int cents)
+    {
+        this.money = money;
+        this.cents = cents;
+    }
+    public void Print()
+    {
+        Console.WriteLine($"{money} dollars & {cents} cent");
+    }
+    public void CheckMoney(int money, int cents)
+    {
+        this.money -= money;
+        this.cents -= cents;
+        if(this.cents >= 100) 
+        { 
+            this.cents -= 100;
+            this.money += 1;
+        }
+        if(this.cents < 0)
+        {
+            this.money -= 1;
+            this.cents += 100;
+        }
+    }
+}
+class Product
+{
+    public string name;
+    public Money price;
+
+    public Product(string name, Money price)
+    {
+        this.name = name;
+        this.price = price;
+    }
+    public void Print() 
+    {
+        Console.WriteLine($"Product name: {name}");
+        Console.WriteLine($"Product cost:");
+        price.Print(); 
+    }
+    public void Buy(int money, int cents)
+    {
+        price.CheckMoney(money, cents);
+    }
+}
+
+//Zadaniye2
+
+Kettle kettle = new Kettle("Kettle Bosch", "Boils water");
+Microwave microwave = new Microwave("Microwave LG", "Warms up a food and has different modes");
+Car car = new Car("Toyota Camry", "Japaneese car");
+Steamship steamship = new Steamship("Steamship S34", "Has larger capacity on the board");
+
+kettle.Show();
+kettle.Sound();
+kettle.Desc();
+
+microwave.Show();
+microwave.Sound();
+microwave.Desc();
+
+car.Show();
+car.Sound();
+car.Desc();
+
+steamship.Show();
+steamship.Sound();
+steamship.Desc();
+class Device
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+
+    public Device(string name, string description)
+    {
+        Name = name;
+        Description = description;
+    }
+
+    public void Sound()
+    {
+        Console.WriteLine($"{Name} makes sound");
+    }
+    public void Show()
+    {
+        Console.WriteLine($"Device name: {Name}");
+    }
+    public void Desc()
+    {
+        Console.WriteLine($"Description of device: {Description}");
+    }
+}
+class Kettle : Device
+{
+    public Kettle(string name, string description) : base(name, description){
+}
+}
+
+class Microwave : Device
+{
+    public Microwave(string name, string description) : base(name, description){}
+}
+
+class Car : Device
+{
+    public Car(string name, string description) : base(name, description){}
+}
+
+class Steamship : Device
+{
+    public Steamship(string name, string description) : base(name, description){}
+}
+
+//Zadaniye 3
+
+Violin violin = new Violin("Violin", "String instrument", "Originated in the 16th century.");
+Trombone trombone = new Trombone("Trombone", "Brass instrument", "Developed in the 15th century.");
+Ukulele ukulele = new Ukulele("Ukulele", "String instrument", "Invented in Hawaii in the late 19th century.");
+Cello cello = new Cello("Cello", "String instrument", "Originated in Italy in the 16th century.");
+
+violin.Show();
+violin.Sound();
+violin.Desc();
+violin.History();
+
+trombone.Show();
+trombone.Sound();
+trombone.Desc();
+trombone.History();
+
+ukulele.Show();
+ukulele.Sound();
+ukulele.Desc();
+ukulele.History();
+
+cello.Show();
+cello.Sound();
+cello.Desc();
+cello.History();
+
+class MusicalInstrument
+{
+    protected string name;
+    protected string description;
+    protected string history;
+
+    public MusicalInstrument(string name, string description, string history)
+    {
+        this.name = name;
+        this.description = description;
+        this.history = history;
+    }
+
+    public void Sound()
+    {
+        Console.WriteLine($"The {name} makes a sound.");
+    }
+
+    public void Show()
+    {
+        Console.WriteLine($"Name of the musical instrument: {name}");
+    }
+
+    public void Desc()
+    {
+        Console.WriteLine($"Description of the musical instrument: {description}");
+    }
+
+    public void History()
+    {
+        Console.WriteLine($"History of the musical instrument: {history}");
+    }
+}
+
+class Violin : MusicalInstrument
+{
+    public Violin(string name, string description, string history) : base(name, description, history){}
+}
+
+class Trombone : MusicalInstrument
+{
+    public Trombone(string name, string description, string history) : base(name, description, history){}
+}
+
+class Ukulele : MusicalInstrument
+{
+    public Ukulele(string name, string description, string history) : base(name, description, history){}
+}
+
+class Cello : MusicalInstrument
+{
+    public Cello(string name, string description, string history) : base(name, description, history){}
+}
+
+//Zadaniye 4
+
+President president = new President();
+Security security = new Security();
+Manager manager = new Manager();
+Engineer engineer = new Engineer();
+
+president.Print();
+security.Print();
+manager.Print();
+engineer.Print();
+
+abstract class Worker
+{
+    public abstract void Print();
+}
+
+class President : Worker
+{
+    public override void Print()
+    {
+        Console.WriteLine("President: Highest-ranking executive in the company.");
+    }
+}
+
+class Security : Worker
+{
+    public override void Print()
+    {
+        Console.WriteLine("Security: Responsible for ensuring the safety and security of the premises.");
+    }
+}
+
+class Manager : Worker
+{
+    public override void Print()
+    {
+        Console.WriteLine("Manager: Oversees a team or department within the organization.");
+    }
+}
+
+class Engineer : Worker
+{
+    public override void Print()
+    {
+        Console.WriteLine("Engineer: Designs and develops technical solutions.");
+    }
+}
+
+
