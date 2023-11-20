@@ -1,0 +1,265 @@
+//Zadaniye 1
+
+using System;
+using System.Collections.Generic;
+
+int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+FilterDelegate evenFilter = ArrayOperations.FilterEven;
+FilterDelegate oddFilter = ArrayOperations.FilterOdd;
+FilterDelegate primeFilter = ArrayOperations.FilterPrime;
+FilterDelegate fibonacciFilter = ArrayOperations.FilterFibonacci;
+
+Console.WriteLine("Even numbers:");
+List<int> evenNumbers = evenFilter(numbers);
+foreach (int num in evenNumbers)
+{
+    Console.WriteLine(num);
+}
+
+Console.WriteLine("Odd numbers:");
+List<int> oddNumbers = oddFilter(numbers);
+foreach (int num in oddNumbers)
+{
+    Console.WriteLine(num);
+}
+
+Console.WriteLine("Prime numbers:");
+List<int> primeNumbers = primeFilter(numbers);
+foreach (int num in primeNumbers)
+{
+    Console.WriteLine(num);
+}
+
+Console.WriteLine("Fibonacci numbers:");
+List<int> fibonacciNumbers = fibonacciFilter(numbers);
+foreach (int num in fibonacciNumbers)
+{
+    Console.WriteLine(num);
+}
+
+class ArrayOperations
+{
+    public static List<int> FilterEven(int[] arr)
+    {
+        List<int> result = new List<int>();
+        foreach (int num in arr)
+        {
+            if (num % 2 == 0)
+            {
+                result.Add(num);
+            }
+        }
+        return result;
+    }
+
+    public static List<int> FilterOdd(int[] arr)
+    {
+        List<int> result = new List<int>();
+        foreach (int num in arr)
+        {
+            if (num % 2 != 0)
+            {
+                result.Add(num);
+            }
+        }
+        return result;
+    }
+
+    public static List<int> FilterPrime(int[] arr)
+    {
+        List<int> result = new List<int>();
+        foreach (int num in arr)
+        {
+            if (IsPrime(num))
+            {
+                result.Add(num);
+            }
+        }
+        return result;
+    }
+
+    public static List<int> FilterFibonacci(int[] arr)
+    {
+        List<int> result = new List<int>();
+        foreach (int num in arr)
+        {
+            if (IsFibonacci(num))
+            {
+                result.Add(num);
+            }
+        }
+        return result;
+    }
+
+    private static bool IsPrime(int num)
+    {
+        if (num <= 1)
+        {
+            return false;
+        }
+
+        for (int i = 2; i * i <= num; i++)
+        {
+            if (num % i == 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool IsFibonacci(int num)
+    {
+        int a = 0;
+        int b = 1;
+        while (b < num)
+        {
+            int temp = a;
+            a = b;
+            b = temp + b;
+        }
+        return b == num;
+    }
+}
+
+//Zadaniye 2
+using System;
+
+Action currentTimeAction = DisplayCurrentTime;
+Action currentDateAction = DisplayCurrentDate;
+Action currentDayOfWeekAction = DisplayCurrentDayOfWeek;
+
+currentTimeAction();
+currentDateAction();
+currentDayOfWeekAction();
+
+Predicate<double> isPositive = x => x > 0;
+Func<double, double, double> triangleAreaFunc = CalculateTriangleArea;
+Func<double, double, double> rectangleAreaFunc = CalculateRectangleArea;
+
+double baseLength = 5.0;
+double height = 8.0;
+double length = 10.0;
+double width = 6.0;
+
+Console.WriteLine($"Is 3.5 positive? {isPositive(3.5)}");
+Console.WriteLine($"Triangle Area with base {baseLength} and height {height}: {triangleAreaFunc(baseLength, height)}");
+Console.WriteLine($"Rectangle Area with length {length} and width {width}: {rectangleAreaFunc(length, width)}");
+class Program
+{
+    static void DisplayCurrentTime()
+    {
+        Console.WriteLine($"Current Time: {DateTime.Now.ToLongTimeString()}");
+    }
+
+    static void DisplayCurrentDate()
+    {
+        Console.WriteLine($"Current Date: {DateTime.Now.ToShortDateString()}");
+    }
+
+    static void DisplayCurrentDayOfWeek()
+    {
+        Console.WriteLine($"Current Day of the Week: {DateTime.Now.DayOfWeek}");
+    }
+
+    static double CalculateTriangleArea(double baseLength, double height)
+    {
+        return 0.5 * baseLength * height;
+    }
+
+    static double CalculateRectangleArea(double length, double width)
+    {
+        return length * width;
+    }
+}
+
+//Zadaniye 3
+using System;
+
+CreditCard card = new CreditCard("6067-5678-9876-1256", "Murad Efendiyev", DateTime.Now.AddYears(3), "2007", 50);
+
+card.AccountCredited += amount => Console.WriteLine($"Account credited with {amount}");
+card.MoneySpent += amount => Console.WriteLine($"Money spent: {amount}");
+card.CreditStarted += () => Console.WriteLine("Credit started.");
+card.TargetBalanceReached += targetBalance => Console.WriteLine($"Target balance reached: {targetBalance}");
+card.PINChanged += newPin => Console.WriteLine($"PIN changed to {newPin}");
+
+card.CreditAccount(500);
+card.CheckBalance();
+card.SpendMoney(200);
+card.CheckBalance();
+card.StartCredit();
+card.SpendMoney(800);
+card.SetTargetBalance(300);
+card.ChangePIN("4321");
+
+class CreditCard
+{
+    public string CardNumber { get; set; }
+    public string CardHolderName { get; set; }
+    public DateTime ExpiryDate { get; set; }
+    public string PIN { get; set; }
+    public double CreditLimit { get; set; }
+    public double Balance { get; private set; }
+
+    public event Action<double> AccountCredited;
+    public event Action<double> MoneySpent;
+    public event Action CreditStarted;
+    public event Action<double> TargetBalanceReached;
+    public event Action<string> PINChanged;
+
+    public CreditCard(string cardNumber, string cardHolderName, DateTime expiryDate, string pin, double creditLimit)
+    {
+        CardNumber = cardNumber;
+        CardHolderName = cardHolderName;
+        ExpiryDate = expiryDate;
+        PIN = pin;
+        CreditLimit = creditLimit;
+        Balance = 0;
+    }
+
+    public void CreditAccount(double amount)
+    {
+        Balance += amount;
+        AccountCredited?.Invoke(amount);
+    }
+
+    public void SpendMoney(double amount)
+    {
+        if (Balance - amount >= -CreditLimit)
+        {
+            Balance -= amount;
+            MoneySpent?.Invoke(amount);
+        }
+        else
+        {
+            Console.WriteLine("Insufficient funds.");
+        }
+    }
+
+    public void StartCredit()
+    {
+        CreditStarted?.Invoke();
+    }
+
+    public void ChangePIN(string newPin)
+    {
+        PIN = newPin;
+        PINChanged?.Invoke(newPin);
+    }
+
+    public void CheckBalance()
+    {
+        Console.WriteLine($"Current Balance: {Balance}");
+    }
+
+    public void SetTargetBalance(double targetBalance)
+    {
+        if (Balance >= targetBalance)
+        {
+            TargetBalanceReached?.Invoke(targetBalance);
+        }
+    }
+}
