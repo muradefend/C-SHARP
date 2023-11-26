@@ -1,0 +1,149 @@
+using System;
+
+public interface IComputerBuilder
+{
+    void PutProcessor(string processor);
+    void PutMemory(string memory);
+    void PutVideoCard(string videocard);
+    void PutStorages(string storage);
+    Computer GetComputer();
+}
+
+public class Computer
+{
+    public string Processor { get; set; }
+    public string Memory { get; set; }
+    public string VideoCard { get; set; }
+    public string Storage { get; set; }
+
+    public override string ToString()
+    {
+        return $"Processor: {Processor}, Memory: {Memory}, Graphics Card: {VideoCard}, Storage: {Storage}";
+    }
+}
+
+public class OfficeComputerBuilder : IComputerBuilder
+{
+    private Computer computer = new Computer();
+
+    public void PutProcessor(string processor)
+    {
+        computer.Processor = processor;
+    }
+
+    public void PutMemory(string memory)
+    {
+        computer.Memory = memory;
+    }
+
+    public void PutVideoCard(string VideoCard)
+    {
+        computer.VideoCard = VideoCard;
+    }
+
+    public void PutStorages(string storage)
+    {
+        computer.Storage = storage;
+    }
+
+
+    public Computer GetComputer()
+    {
+        return computer;
+    }
+}
+
+public class GamingComputerBuilder : IComputerBuilder
+{
+    private Computer computer = new Computer();
+
+    public void PutProcessor(string processor)
+    {
+        computer.Processor = processor;
+    }
+
+    public void PutMemory(string memory)
+    {
+        computer.Memory = memory;
+    }
+
+    public void PutVideoCard(string VideoCard)
+    {
+        computer.VideoCard = VideoCard;
+    }
+
+    public void PutStorages(string storage)
+    {
+        computer.Storage = storage;
+    }
+
+    public Computer GetComputer()
+    {
+        return computer;
+    }
+}
+
+public class DesignerComputerBuilder : IComputerBuilder
+{
+    private Computer computer = new Computer();
+
+    public void PutProcessor(string processor)
+    {
+        computer.Processor = processor;
+    }
+
+    public void PutMemory(string memory)
+    {
+        computer.Memory = memory;
+    }
+
+    public void PutVideoCard(string VideoCard)
+    {
+        computer.VideoCard = VideoCard;
+    }
+
+    public void PutStorages(string storage)
+    {
+        computer.Storage = storage;
+    }
+
+    public Computer GetComputer()
+    {
+        return computer;
+    }
+}
+
+public class ComputerDirector
+{
+    public void ConstructComputer(IComputerBuilder builder, string processor, string memory, string VideoCard, string storage)
+    {
+        builder.PutProcessor(processor);
+        builder.PutMemory(memory);
+        builder.PutVideoCard(VideoCard);
+        builder.PutStorages(storage);
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        IComputerBuilder officeBuilder = new OfficeComputerBuilder();
+        IComputerBuilder gamingBuilder = new GamingComputerBuilder();
+        IComputerBuilder designerBuilder = new DesignerComputerBuilder();
+
+        ComputerDirector director = new ComputerDirector();
+
+        director.ConstructComputer(officeBuilder, "Intel Core i5", "8GB RAM", "Integrated Graphics", "256GB SSD");
+        Computer officeComputer = officeBuilder.GetComputer();
+        Console.WriteLine("Office Computer: " + officeComputer);
+
+        director.ConstructComputer(gamingBuilder, "Intel Core i7", "16GB RAM", "NVIDIA GeForce RTX 3070", "512GB SSD + 1TB HDD");
+        Computer gamingComputer = gamingBuilder.GetComputer();
+        Console.WriteLine("Gaming Computer: " + gamingComputer);
+
+        director.ConstructComputer(designerBuilder, "AMD Ryzen 9", "32GB RAM", "NVIDIA Quadro RTX 4000", "1TB NVMe SSD + 2TB HDD");
+        Computer designerComputer = designerBuilder.GetComputer();
+        Console.WriteLine("Designer Computer: " + designerComputer);
+    }
+}
