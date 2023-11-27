@@ -1,0 +1,69 @@
+IAutomobileFactory sedanFactory = new SedanFactory();
+IAutomobile sedan = sedanFactory.CreateAutomobile();
+Console.WriteLine(sedan.GetModelInfo());
+
+IAutomobileFactory suvFactory = new SUVFactory();
+IAutomobile suv = suvFactory.CreateAutomobile();
+Console.WriteLine(suv.GetModelInfo());
+
+IAutomobileFactory truckFactory = new TruckFactory();
+IAutomobile truck = truckFactory.CreateAutomobile();
+Console.WriteLine(truck.GetModelInfo());
+
+public interface IAutomobile
+{
+    string GetModelInfo();
+}
+
+public interface IAutomobileFactory
+{
+    IAutomobile CreateAutomobile();
+}
+
+public class Sedan : IAutomobile
+{
+    public string GetModelInfo()
+    {
+        return "This car is a Sedan";
+    }
+}
+
+publiv class SUV : IAutomobile
+{
+    public string GetModelInfo()
+    {
+        return "This car is a SUV";
+    }
+}
+
+public class Truck: IAutomobile
+{
+    public class GetModelInfo
+    {
+        return "This car is a Truck";
+    }
+}
+
+public class SedanFactory : IAutomobileFactory
+{
+    public IAutomobile CreateAutomobile()
+    {
+        return new Sedan();
+    }
+}
+
+public class SUVFactory : IAutomobileFactory
+{
+    public IAutomobile CreateAutomobile()
+    {
+        return new SUV();
+    }
+}
+
+public class TruckFactory : IAutomobileFactory
+{
+    public IAutomobile CreateAutomobile()
+    {
+        return new Truck();
+    }
+}
